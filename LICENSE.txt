@@ -1,4 +1,4 @@
-Copyright (c) 2013 Akira Ikeda
+Copyright (c) 2013 akicho8
 
 MIT License
 

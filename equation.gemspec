@@ -6,10 +6,10 @@ require 'equation/version'
 Gem::Specification.new do |spec|
   spec.name          = "equation"
   spec.version       = Equation::VERSION
-  spec.authors       = ["Akira Ikeda"]
-  spec.email         = ["pinpon.ikeda@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.authors       = ["akicho8"]
+  spec.email         = ["akicho8@gmail.com"]
+  spec.description   = %q{x y interconversion library}
+  spec.summary       = %q{x y interconversion library}
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -21,4 +21,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
+
+  spec.add_development_dependency "stylet_math"
+  spec.add_development_dependency "rain_table"
+  spec.add_development_dependency "gnuplot"
 end
