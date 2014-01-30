@@ -53,19 +53,26 @@
 なお、truncate しても ceil しても diff が3になる時点でダメ。
 同じメソッドで小数を削ってしまうのがダメ。
 
-正しい方法1
+対策1
 
 : a = curve.y_by_x(2).floor       # => 1
 : b = curve.y_by_x(3).ceil        # => 5
 : diff = b - a                    # => 4
 : (curve.y_by_x(2) + diff)        # => 5.04112869637651
 
-正しい方法2
+対策2
 
 : a = curve.y_by_x(2)             # => 1.0411286963765098
 : b = curve.y_by_x(3)             # => 4.164514785506039
 : diff = (b - a).ceil             # => 4
 : (curve.y_by_x(2) + diff)        # => 5.04112869637651
+
+対策3
+
+: a = curve.y_by_x(2).ceil        # => 2
+: b = curve.y_by_x(3).ceil        # => 5
+: diff = b - a                    # => 3
+: (a + diff)                      # => 5
 
 *** 現在の経験値だとレベルはいくつか？
 
@@ -81,13 +88,25 @@
 
 正しい方法
 
-: curve.x_by_y(1000)              # => 31.991870701926988
 : curve.x_by_y(1000).truncate     # => 31
 : curve.y_by_x(31)                # => 937.0158267388588
 
 現在の経験値 1000 が 937.0 を越えている。
 
-*** まとめると
+*** まとめると──
 
-- y_by_x(レベル) の結果の経験値同士の差分を整数で求めるには (y_by_x(次レベル) - y_by_x(現レベル)).ceil する
-- x_by_y(経験値) の結果の整数でのレベルは truncate する
+- y_by_x(レベル) の結果は ceil する
+- x_by_y(経験値) の結果は floor する
+
+これを使う側でいちいち補正するのも大変なのでモジュールにまとめてある。
+Equation::Base に Equation::LevelSupport を include すれば lv_by_exp と exp_by_lv が使えるようになる。
+
+: require 'equation/level_support'
+: Equation::Base.send(:include, Equation::LevelSupport)
+: 
+: curve = Equation::ParabolaCurve.create(1..99, 0..9999)
+: curve.lv_by_exp(1000)           # => 31
+: curve.exp_by_lv(31)             # => 938
+: curve.lv_by_exp(938)            # => 31
+
+経験値 1000 のときのレベルは 31 で、その 31 になるために必要な経験値は 938 で、938 あればレベル 31 になる。

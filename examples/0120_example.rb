@@ -18,18 +18,23 @@ diff = b - a                    # => 3
 # なお、truncate しても ceil しても diff が3になる時点でダメ。
 # 同じメソッドで小数を削ってしまうのがダメ。
 
-# 正しい方法1
+# 対策1
 a = curve.y_by_x(2).floor       # => 1
 b = curve.y_by_x(3).ceil        # => 5
 diff = b - a                    # => 4
 (curve.y_by_x(2) + diff)        # => 5.04112869637651
 
-# 正しい方法2
+# 対策2
 a = curve.y_by_x(2)             # => 1.0411286963765098
 b = curve.y_by_x(3)             # => 4.164514785506039
 diff = (b - a).ceil             # => 4
 (curve.y_by_x(2) + diff)        # => 5.04112869637651
 
+# 対策3
+a = curve.y_by_x(2).ceil        # => 2
+b = curve.y_by_x(3).ceil        # => 5
+diff = b - a                    # => 3
+(a + diff)                      # => 5
 
 # 現在の経験値だとレベルはいくつか？の間違いやすい例
 curve = Equation::ParabolaCurve.create(1..99, 0..9999)
@@ -42,6 +47,6 @@ curve.y_by_x(32)                # => 1000.5246772178259
 
 # 経験値 1000 の場合のレベルは？
 curve.x_by_y(1000)              # => 31.991870701926988
-curve.x_by_y(1000).truncate     # => 31
+curve.x_by_y(1000).floor        # => 31
 curve.y_by_x(31)                # => 937.0158267388588
 
