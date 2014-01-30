@@ -63,4 +63,21 @@ describe Equation do
       curve.x_by_y(999).should == 9.0
     end
   end
+
+  describe Equation::LevelSupport do
+    it do
+      klass = Class.new(Equation::ParabolaCurve) { include Equation::LevelSupport }
+
+      curve = klass.create(1..99, 0..9999)
+      curve.exp_by_lv(30).should == 876
+      curve.lv_by_exp(876).should == 30
+
+      curve.lv_by_exp(950).should == 31
+      curve.exp_by_lv(31).should == 938
+      curve.exp_by_lv(32).should == 1001
+
+      curve.exp_range_by_lv(8).should == (52..67)
+      curve.exp_range_by_lv(9).should == (67..85)
+    end
+  end
 end
