@@ -94,13 +94,14 @@
 
 現在の経験値 1000 が 937.0 を越えている。
 
-*** まとめると──
+*** 【重要】まとめると──
 
-- y_by_x(レベル) の結果は ceil する
-- x_by_y(経験値) の結果は floor する
+- レベルから経験値を求める場合の y_by_x の結果は ceil する
+- 経験値からレベルを求める場合の x_by_y の結果は floor する
 
 これを使う側でいちいち補正するのも大変なのでモジュールにまとめてある。
 Equation::Base に Equation::LevelSupport を include すれば lv_by_exp と exp_by_lv が使えるようになる。
+(lv_by_exp と exp_by_lv は、それぞれ lv_by_value と value_by_lv にエイリアスしている)
 
 : require 'equation/level_support'
 : Equation::Base.send(:include, Equation::LevelSupport)
