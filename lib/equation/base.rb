@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
 module Equation
   class Base
+    def self.friendly_create(**params)
+      create(params[:x_range], params[:y_range], params)
+    end
+
     def self.create(x_range, y_range, *args)
       new(x_range.min, y_range.min, x_range.max, y_range.max, *args)
     end
 
     attr_accessor :x0, :y0, :x1, :y1
 
-    def initialize(x0, y0, x1, y1)
-      @x0, @y0, @x1, @y1 = x0, y0, x1, y1
+    def initialize(*args)
+      @x0, @y0, @x1, @y1 = args
     end
 
     def x_range
@@ -45,7 +49,7 @@ module Equation
       Gnuplot.open do |gp|
         Gnuplot::Plot.new(gp) do |plot|
           plot.terminal options[:terminal]
-          plot.output options[:filename]
+          plot.output options[:filename].to_s
           plot.title options[:title]
           plot.xlabel options[:xlabel]
           plot.ylabel options[:ylabel]

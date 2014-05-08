@@ -4,7 +4,4 @@ require 'equation'
 require 'equation/level_support'
 Equation::Base.send(:include, Equation::LevelSupport)
 
-curve = Equation::ParabolaCurve.create(1..99, 0..9999)
-curve.lv_by_exp(1000)           # => 31
-curve.exp_by_lv(31)             # => 938
-curve.lv_by_exp(938)            # => 31
+Equation::LinearCurve.create(15..15, 100..200).exp_by_lv(15) rescue $! # => #<ZeroDivisionError: divided by 0>

@@ -29,7 +29,7 @@ describe Equation do
   describe Equation::BezierCurve do
     it do
       # 早熟
-      curve = Equation::BezierCurve.create(1..9, 100..999, 0.25)
+      curve = Equation::BezierCurve.create(1..9, 100..999, :pull => 0.25)
       curve.y_by_x(1).should == 100.0
       curve.y_by_x(2).should == 360.00299257341254
       curve.y_by_x(3).should == 533.3636760044205
@@ -47,7 +47,7 @@ describe Equation do
       curve.y_by_x(9).should == 999.0
 
       # 晩成
-      curve = Equation::BezierCurve.create(1..9, 100..999, -0.25)
+      curve = Equation::BezierCurve.create(1..9, 100..999, :pull => -0.25)
       curve.y_by_x(1).should == 100.0
       curve.y_by_x(2).should == 141.86901485317503
       curve.y_by_x(3).should == 193.71957135293303

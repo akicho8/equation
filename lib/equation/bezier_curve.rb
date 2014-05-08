@@ -4,7 +4,7 @@
 #
 #   LV 1..9 が攻撃力 100...999 に対応する曲線を、晩成タイプにして指定レベルでの攻撃力を取得するには？
 #
-#     curve = BezierCurve.create(1..9, 100..999, -0.25)
+#     curve = BezierCurve.create(1..9, 100..999, :pull => -0.25)
 #     curve.y_by_x(1)   # => 100.0
 #     curve.y_by_x(2)   # => 141.86901485317503
 #     curve.y_by_x(3)   # => 193.71957135293303
@@ -28,9 +28,9 @@ module Equation
   class BezierCurve < Base
     attr_accessor :pull
 
-    def initialize(x0, y0, x1, y1, pull = 0.0)
-      super(x0, y0, x1, y1)
-      @pull = pull
+    def initialize(*args, **options)
+      super(*args)
+      @pull = options[:pull]
     end
 
     def _y_by_x(x)
@@ -54,23 +54,31 @@ module Equation
       end
 
       def initialize(pull)
-        @pull = pull
+        pull ||= 0.0
+        unless pull.kind_of? Array
+          # 要素が一つだった場合、Y座標を中心に考えたとして、
+          #   正 → 早熟 → 左上に上げる → [-x, +y]
+          #   負 → 晩成 → 右下に下げる → [+x, -y]
+          # とする
+          pull = [-pull, pull]
+        end
+        @pull = V[*pull]
       end
 
       def y_by_x(x)
-        return x if @pull.zero?
+        return x if @pull.magnitude.zero?
         t = intersection(*points, *line([x, 0.0], [x, 1.0]))
         bezier_curve(*points, t.first).y
       end
 
       def x_by_y(y)
-        return y if @pull.zero?
+        return y if @pull.magnitude.zero?
         t = intersection(*points, *line([0.0, y], [1.0, y]))
         bezier_curve(*points, t.first).x
       end
 
       def points
-        [V[0.0, 0.0], V[0.5 - @pull, 0.5 + @pull], V[1.0, 1.0]]
+        [V[0.0, 0.0], V[0.5 + @pull.x, 0.5 + @pull.y], V[1.0, 1.0]]
       end
 
       def bezier_curve(p0, p1, p2, t)
@@ -121,7 +129,7 @@ if $0 == __FILE__
   # 開始レベルが1で最終レベルが9、開始レベルのときの攻撃力が100で最終レベル時の攻撃力が999になる場合で、左下0.0と右上1.0を結ぶ二次ベジェ曲線の中央の制御点 X, Y をそれぞれを左上に 0.25 ひっぱったものを早熟、ひっぱらなかったものを普通、右下にひっぱったものを晩成としたときの、指定レベルでの攻撃力を求める例。
 
   # 早熟
-  curve1 = Equation::BezierCurve.create(1..9, 100..999, 0.25)
+  curve1 = Equation::BezierCurve.create(1..9, 100..999, :pull => 0.25)
   curve1.y_by_x(1)   # => 100.0
   curve1.y_by_x(2)   # => 360.00299257341254
   curve1.y_by_x(3)   # => 533.3636760044205
@@ -139,7 +147,7 @@ if $0 == __FILE__
   curve2.y_by_x(9)   # => 999.0
 
   # 晩成
-  curve3 = Equation::BezierCurve.create(1..9, 100..999, -0.25)
+  curve3 = Equation::BezierCurve.create(1..9, 100..999, :pull => -0.25)
   curve3.y_by_x(1)   # => 100.0
   curve3.y_by_x(2)   # => 141.86901485317503
   curve3.y_by_x(3)   # => 193.71957135293303
@@ -168,7 +176,7 @@ if $0 == __FILE__
     attrs[:level] = level
     patterns.each do |e|
       if e[:level].include?(level)
-        attrs[e[:name]] = Equation::BezierCurve.create(e[:level], e[:attack], e[:pull]).y_by_x(level)
+        attrs[e[:name]] = Equation::BezierCurve.create(e[:level], e[:attack], e).y_by_x(level)
       end
     end
     attrs
@@ -176,7 +184,7 @@ if $0 == __FILE__
   tt records
 
   # patterns.each do |e|
-  #   e[:level].collect{|x| {:level => x, e[:name] => Equation::BezierCurve.create(e[:level], e[:attack], e[:pull]).y_by_x(x)} }
+  #   e[:level].collect{|x| {:level => x, e[:name] => Equation::BezierCurve.create(e[:level], e[:attack], e).y_by_x(x)} }
   # end
 
   Gnuplot.open do |gp|
@@ -189,7 +197,7 @@ if $0 == __FILE__
       plot.key "right bottom"
       plot.data = patterns.collect do |e|
         x = e[:level].to_a
-        y = e[:level].collect{|level| Equation::BezierCurve.create(e[:level], e[:attack], e[:pull]).y_by_x(level) }
+        y = e[:level].collect{|level| Equation::BezierCurve.create(e[:level], e[:attack], e).y_by_x(level) }
         Gnuplot::DataSet.new([x, y]) do |ds|
           ds.with = "linespoints pointtype 7 pointsize 1.2"
           # ds.notitle
