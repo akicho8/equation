@@ -4,7 +4,7 @@
 #
 #   レベル1..99が何か0..9999に対応する一次関数でレベル30のときの何か？ またその逆は？
 #
-#     curve = LinearCurve.create(1..99, 0..9999)
+#     curve = LinearCurve._create(1..99, 0..9999)
 #     v = curve.y_by_x(30)        # => 875.5892336526448
 #     curve.x_by_y(v)             # => 30.0
 #
@@ -50,7 +50,7 @@ if $0 == __FILE__
     end
   end
 
-  curve = Equation::LinearCurve.create(1..20, 300..2400)
+  curve = Equation::LinearCurve._create(1..20, 300..2400)
   y = curve.y_by_x(15)                # => 1847.3684210526317
   curve.x_by_y(y)                     # => 15.0
 
@@ -60,7 +60,7 @@ if $0 == __FILE__
 
   output_file(records, "_linear_curve.png")
 
-  curve = Equation::LinearCurve.create(1..99, 1..3)
+  curve = Equation::LinearCurve._create(1..99, 1..3)
   tt (1..99).collect {|level| {:lv => level, :exp => curve.y_by_x(level).to_f} }
 end
 # >> writing this to gnuplot:

@@ -14,7 +14,7 @@ patterns << {:pull => [0.001,  0.5], :y_range => (attack_base..10000 - 1000 * 0)
 patterns << {:pull => [-0.25, -0.5], :y_range => (attack_base..10000 - 1000 * 0)}
 patterns << {:pull => [ 0.25,  0.5], :y_range => (attack_base..10000 - 1000 * 0)}
 
-list = patterns.collect{|e|{:name => e[:pull], :records => x_range.collect{|x| {:x => x, :y => Equation::BezierCurve.create(x_range, e[:y_range], e).y_by_x(x)} }}}
+list = patterns.collect{|e|{:name => e[:pull], :records => x_range.collect{|x| {:x => x, :y => Equation::BezierCurve._create(x_range, e[:y_range], e).y_by_x(x)} }}}
 Equation::Base.output_file(list, :title => "Equation::BezierCurve", :filename => "bezier_curve_pull2.png")
 # >> writing this to gnuplot:
 # >> set terminal png font 'Ricty-Bold.ttf'

@@ -2,7 +2,7 @@
 #
 # LVと経験値の相互変換の際の曖昧さを無くす小数点補正
 #
-#   curve = Equation::ParabolaCurve.create(1..99, 0..9999)
+#   curve = Equation::ParabolaCurve._create(1..99, 0..9999)
 #   curve.exp_by_lv(10)           # => 85
 #   curve.lv_by_exp(85)           # => 10
 #

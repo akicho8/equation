@@ -4,7 +4,7 @@
 #
 #   レベル1..99が経験値0..9999に対応する二次関数でレベル30のときの経験値は？ またその逆は？
 #
-#     curve = ParabolaCurve.create(1..99, 0..9999)
+#     curve = ParabolaCurve._create(1..99, 0..9999)
 #     exp = curve.y_by_x(30)        # => 875.5892336526448
 #     curve.x_by_y(exp)             # => 30.0
 #
@@ -83,11 +83,11 @@ if $0 == __FILE__
 
   # x_range = 55..74
   # y_range = 3..59
-  # v = Equation::ParabolaCurve.create(x_range, y_range).y_by_x(74)
+  # v = Equation::ParabolaCurve._create(x_range, y_range).y_by_x(74)
   # exit
 
   # レベル1..20で経験値0..999のときと考える場合
-  curve = Equation::ParabolaCurve.create(1..20, 0..999)
+  curve = Equation::ParabolaCurve._create(1..20, 0..999)
   exp = curve.y_by_x(15)           # => 542.393351800554
   curve.x_by_y(exp)                # => 15.0
 
@@ -108,12 +108,12 @@ if $0 == __FILE__
 
   # レベル2のときに経験値10にするには？
 
-  curve = Equation::ParabolaCurve.create(2..20, 10..999)
+  curve = Equation::ParabolaCurve._create(2..20, 10..999)
   curve.y_by_x(2)           # => 10.0
 
   # レベル 21..25 は崖っ縁にしたい場合は？
 
-  curve = Equation::ParabolaCurve.create(20..25, 999..10000)
+  curve = Equation::ParabolaCurve._create(20..25, 999..10000)
   curve.y_by_x(20)          # => 999.0
   curve.y_by_x(21)          # => 1359.04
   curve.y_by_x(22)          # => 2439.16
@@ -138,7 +138,7 @@ if $0 == __FILE__
     if x_range.size <= 1 || y_range.size <= 1
       next
     end
-    v = Equation::ParabolaCurve.create(x_range, y_range).y_by_x(x_range.max)
+    v = Equation::ParabolaCurve._create(x_range, y_range).y_by_x(x_range.max)
     if v != y_range.max
       p [x_range, y_range, v]
     end

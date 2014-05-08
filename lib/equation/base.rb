@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 module Equation
   class Base
-    def self.friendly_create(**params)
-      create(params[:x_range], params[:y_range], params)
+    def self.create(**params)
+      _create(params[:x_range], params[:y_range], params)
     end
 
-    def self.create(x_range, y_range, *args)
+    def self._create(x_range, y_range, *args)
       new(x_range.min, y_range.min, x_range.max, y_range.max, *args)
     end
 
