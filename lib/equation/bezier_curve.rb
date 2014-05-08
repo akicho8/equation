@@ -4,7 +4,7 @@
 #
 #   LV 1..9 が攻撃力 100...999 に対応する曲線を、晩成タイプにして指定レベルでの攻撃力を取得するには？
 #
-#     curve = BezierCurve.create(1..9, 100..999, :pull => -0.25)
+#     curve = BezierCurve._create(1..9, 100..999, :pull => -0.25)
 #     curve.y_by_x(1)   # => 100.0
 #     curve.y_by_x(2)   # => 141.86901485317503
 #     curve.y_by_x(3)   # => 193.71957135293303
@@ -129,7 +129,7 @@ if $0 == __FILE__
   # 開始レベルが1で最終レベルが9、開始レベルのときの攻撃力が100で最終レベル時の攻撃力が999になる場合で、左下0.0と右上1.0を結ぶ二次ベジェ曲線の中央の制御点 X, Y をそれぞれを左上に 0.25 ひっぱったものを早熟、ひっぱらなかったものを普通、右下にひっぱったものを晩成としたときの、指定レベルでの攻撃力を求める例。
 
   # 早熟
-  curve1 = Equation::BezierCurve.create(1..9, 100..999, :pull => 0.25)
+  curve1 = Equation::BezierCurve._create(1..9, 100..999, :pull => 0.25)
   curve1.y_by_x(1)   # => 100.0
   curve1.y_by_x(2)   # => 360.00299257341254
   curve1.y_by_x(3)   # => 533.3636760044205
@@ -138,7 +138,7 @@ if $0 == __FILE__
   curve1.y_by_x(9)   # => 999.0
 
   # 普通
-  curve2 = Equation::BezierCurve.create(1..9, 100..999)
+  curve2 = Equation::BezierCurve._create(1..9, 100..999)
   curve2.y_by_x(1)   # => 100.0
   curve2.y_by_x(2)   # => 212.375
   curve2.y_by_x(3)   # => 324.75
@@ -147,7 +147,7 @@ if $0 == __FILE__
   curve2.y_by_x(9)   # => 999.0
 
   # 晩成
-  curve3 = Equation::BezierCurve.create(1..9, 100..999, :pull => -0.25)
+  curve3 = Equation::BezierCurve._create(1..9, 100..999, :pull => -0.25)
   curve3.y_by_x(1)   # => 100.0
   curve3.y_by_x(2)   # => 141.86901485317503
   curve3.y_by_x(3)   # => 193.71957135293303
@@ -176,7 +176,7 @@ if $0 == __FILE__
     attrs[:level] = level
     patterns.each do |e|
       if e[:level].include?(level)
-        attrs[e[:name]] = Equation::BezierCurve.create(e[:level], e[:attack], e).y_by_x(level)
+        attrs[e[:name]] = Equation::BezierCurve._create(e[:level], e[:attack], e).y_by_x(level)
       end
     end
     attrs
@@ -184,7 +184,7 @@ if $0 == __FILE__
   tt records
 
   # patterns.each do |e|
-  #   e[:level].collect{|x| {:level => x, e[:name] => Equation::BezierCurve.create(e[:level], e[:attack], e).y_by_x(x)} }
+  #   e[:level].collect{|x| {:level => x, e[:name] => Equation::BezierCurve._create(e[:level], e[:attack], e).y_by_x(x)} }
   # end
 
   Gnuplot.open do |gp|
@@ -197,7 +197,7 @@ if $0 == __FILE__
       plot.key "right bottom"
       plot.data = patterns.collect do |e|
         x = e[:level].to_a
-        y = e[:level].collect{|level| Equation::BezierCurve.create(e[:level], e[:attack], e).y_by_x(level) }
+        y = e[:level].collect{|level| Equation::BezierCurve._create(e[:level], e[:attack], e).y_by_x(level) }
         Gnuplot::DataSet.new([x, y]) do |ds|
           ds.with = "linespoints pointtype 7 pointsize 1.2"
           # ds.notitle

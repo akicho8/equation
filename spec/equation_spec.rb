@@ -8,7 +8,7 @@ describe Equation do
 
   describe Equation::LinearCurve do
     it do
-      curve = Equation::LinearCurve.create(0.1..0.5, 100..150)
+      curve = Equation::LinearCurve._create(0.1..0.5, 100..150)
       ys = curve.x_range.step(0.1).collect{|x|curve.y_by_x(x)}
       ys.should == [100.0, 112.5, 125.00000000000001, 137.5, 150.0]
       xs = ys.collect{|y| curve.x_by_y(y) }
@@ -18,7 +18,7 @@ describe Equation do
 
   describe Equation::ParabolaCurve do
     it do
-      curve = Equation::ParabolaCurve.create(0.1..0.5, 100..150)
+      curve = Equation::ParabolaCurve._create(0.1..0.5, 100..150)
       ys = curve.x_range.step(0.1).collect{|x|curve.y_by_x(x)}
       ys.should == [100.0, 103.125, 112.5, 128.125, 150.0]
       xs = ys.collect {|y| curve.x_by_y(y) }
@@ -29,7 +29,7 @@ describe Equation do
   describe Equation::BezierCurve do
     it do
       # 早熟
-      curve = Equation::BezierCurve.create(1..9, 100..999, :pull => 0.25)
+      curve = Equation::BezierCurve._create(1..9, 100..999, :pull => 0.25)
       curve.y_by_x(1).should == 100.0
       curve.y_by_x(2).should == 360.00299257341254
       curve.y_by_x(3).should == 533.3636760044205
@@ -38,7 +38,7 @@ describe Equation do
       curve.y_by_x(9).should == 999.0
 
       # 普通
-      curve = Equation::BezierCurve.create(1..9, 100..999)
+      curve = Equation::BezierCurve._create(1..9, 100..999)
       curve.y_by_x(1).should == 100.0
       curve.y_by_x(2).should == 212.375
       curve.y_by_x(3).should == 324.75
@@ -47,7 +47,7 @@ describe Equation do
       curve.y_by_x(9).should == 999.0
 
       # 晩成
-      curve = Equation::BezierCurve.create(1..9, 100..999, :pull => -0.25)
+      curve = Equation::BezierCurve._create(1..9, 100..999, :pull => -0.25)
       curve.y_by_x(1).should == 100.0
       curve.y_by_x(2).should == 141.86901485317503
       curve.y_by_x(3).should == 193.71957135293303
@@ -68,7 +68,7 @@ describe Equation do
     it do
       klass = Class.new(Equation::ParabolaCurve) { include Equation::LevelSupport }
 
-      curve = klass.create(1..99, 0..9999)
+      curve = klass._create(1..99, 0..9999)
       curve.exp_by_lv(30).should == 876
       curve.lv_by_exp(876).should == 30
 

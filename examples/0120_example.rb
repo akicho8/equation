@@ -3,7 +3,7 @@ $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'equation'
 
 # 「あとどれだけ経験値を足せば次のレベルになるか」を調べるときはまりがちな例
-curve = Equation::ParabolaCurve.create(1..99, 0..9999)
+curve = Equation::ParabolaCurve._create(1..99, 0..9999)
 
 # まず現在がレベル2でレベル3に移行したいのでそれぞれの必要経験値を調べる
 curve.y_by_x(2)                 # => 1.0411286963765098
@@ -37,7 +37,7 @@ diff = b - a                    # => 3
 (a + diff)                      # => 5
 
 # 現在の経験値だとレベルはいくつか？の間違いやすい例
-curve = Equation::ParabolaCurve.create(1..99, 0..9999)
+curve = Equation::ParabolaCurve._create(1..99, 0..9999)
 
 # 現在の経験値は1000に対応するのはレベル32
 curve.x_by_y(1000).round        # => 32
