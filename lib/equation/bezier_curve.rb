@@ -67,15 +67,17 @@ module Equation
 
       def y_by_x(x)
         return x if @pull.magnitude.zero?
-        t = intersection(*points, *line([x, 0.0], [x, 1.0]))
+        t = intersection!(*points, *line([x, 0.0], [x, 1.0]))
         bezier_curve(*points, t.first).y
       end
 
       def x_by_y(y)
         return y if @pull.magnitude.zero?
-        t = intersection(*points, *line([0.0, y], [1.0, y]))
+        t = intersection!(*points, *line([0.0, y], [1.0, y]))
         bezier_curve(*points, t.first).x
       end
+
+      private
 
       def points
         [V[0.0, 0.0], V[0.5 + @pull.x, 0.5 + @pull.y], V[1.0, 1.0]]
@@ -96,6 +98,14 @@ module Equation
         [a, b, c]
       end
 
+      def intersection!(*args)
+        t = intersection(*args)
+        if t.empty?
+          raise ArgumentError, "直線と曲線の交点が見つかりません。pull が 0.3 か、指定した x y がそれぞれ x_range y_range の範囲に含まれていません"
+        end
+        t
+      end
+
       # 二次ベジェ曲線と直線の交点
       # http://geom.web.fc2.com/geometry/bezier/qb-line-intersection.html
       # NUTSU » [as]ベジェ曲線と直線の交点
@@ -113,7 +123,7 @@ module Equation
         elsif d.zero?
           t << Rational(-m, 2.0 * l)
         end
-        t.select{|v|(0.0..1.0).include?(v)}
+        t.find_all{|v|(0.0..1.0).include?(v)}
       end
     end
   end
