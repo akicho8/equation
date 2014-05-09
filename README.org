@@ -113,3 +113,12 @@ Equation::Base に Equation::LevelSupport を include すれば lv_by_exp と ex
 : curve.lv_by_exp(938)            # => 31
 
 経験値 1000 のときのレベルは 31 で、その 31 になるために必要な経験値は 938 で、938 あればレベル 31 になる。
+
+** 不具合
+
+- ベジェ曲線の pull の絶対値が 0.3 のとき、なぜか垂直の直線との交点が取れない
+
+  NUTSU » [as]ベジェ曲線と直線の交点 http://nutsu.com/blog/2007/101701_as_bezjesegment3.html
+  の as で確認しても同様の現象になる。
+
+  とりあえず 0.3 を少しずらして 0.30001 などにすると交点が出てくる
