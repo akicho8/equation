@@ -11,6 +11,7 @@
   [[https://raw.github.com/akicho8/equation/master/examples/parabola_curve.png]]
   [[https://raw.github.com/akicho8/equation/master/examples/bezier_curve.png]]
   [[https://raw.github.com/akicho8/equation/master/examples/bezier_curve_pull2.png]]
+  [[https://raw.github.com/akicho8/equation/master/examples/mix_curve.png]]
 
 ** 使用例
 
