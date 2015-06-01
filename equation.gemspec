@@ -23,6 +23,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec"
 
   # spec.add_development_dependency "stylet_math"
-  spec.add_development_dependency "rain_table"
+  # spec.add_development_dependency "rain_table"
   spec.add_development_dependency "gnuplot"
 end
