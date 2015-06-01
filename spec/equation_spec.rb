@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'spec_helper'
 
-describe Equation do
+RSpec.describe Equation do
   it 'should have a version number' do
     Equation::VERSION.should_not be_nil
   end
