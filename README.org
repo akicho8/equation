@@ -17,100 +17,126 @@
 
 レベルの範囲が1..99で運の強さが0..9999の範囲を取るとき、直線の関係にある場合の、レベル30のときの運の強さは？ またその値からレベルを求めるには？
 
-: curve = Equation.create(:type => :linear, :x_range => 1..99, :y_range => 0..9999)
-: v = curve.y_by_x(30)        # => 2958.887755102041
-: curve.x_by_y(v)             # => 30.0
+#+BEGIN_SRC ruby
+curve = Equation.create(:type => :linear, :x_range => 1..99, :y_range => 0..9999)
+v = curve.y_by_x(30)        # => 2958.887755102041
+curve.x_by_y(v)             # => 30.0
+#+END_SRC
 
 レベルの範囲が1..99で経験値が0..9999の範囲を取るとき、放物線の関係にある場合の、レベル30のときの経験値は？ またその値からレベルを求めるには？
 
-: curve = Equation.create(:type => :parabola, :x_range => 1..99, :y_range => 0..9999)
-: v = curve.y_by_x(30)        # => 875.5892336526447
-: curve.x_by_y(v)             # => 29.999999999999996
+#+BEGIN_SRC ruby
+curve = Equation.create(:type => :parabola, :x_range => 1..99, :y_range => 0..9999)
+v = curve.y_by_x(30)        # => 875.5892336526447
+curve.x_by_y(v)             # => 29.999999999999996
+#+END_SRC
 
 レベルの範囲が1..99で攻撃力が0..9999の範囲を取るとき、左下(0,0)右上(1,1)を結ぶベジェ曲線の中央の制御点を左上に0.25移動させた曲線の関係にある場合の、レベル30のときの攻撃力は？ またその値からレベルを求めるには？
 
-: curve = Equation.create(:type => :bezier, :x_range => 1..99, :y_range => 0..9999, :pull => 0.25)
-: v = curve.y_by_x(30)        # => 6958.219471218414
-: curve.x_by_y(v)             # => 29.99999999999998
+#+BEGIN_SRC ruby
+curve = Equation.create(:type => :bezier, :x_range => 1..99, :y_range => 0..9999, :pull => 0.25)
+v = curve.y_by_x(30)        # => 6958.219471218414
+curve.x_by_y(v)             # => 29.99999999999998
+#+END_SRC
 
 ** 間違えやすい所
 
 *** 「あとどれだけ経験値を足せば次のレベルになるか」を調べるとき
 
-: curve = Equation.create(:type => :parabola, :x_range => 1..99, :y_range => 0..9999)
+#+BEGIN_SRC ruby
+curve = Equation.create(:type => :parabola, :x_range => 1..99, :y_range => 0..9999)
+#+END_SRC
 
-まず現在がレベル2でレベル3に移行したいのでそれぞれの必要経験値を調べる
+まず現在がレベル2でレベル3に移行したいのでそれぞれの必要経験値を調べる。
 
-: curve.y_by_x(2)                 # => 1.0411286963765098
-: curve.y_by_x(3)                 # => 4.164514785506039
+#+BEGIN_SRC ruby
+curve.y_by_x(2)                 # => 1.0411286963765098
+curve.y_by_x(3)                 # => 4.164514785506039
+#+END_SRC
 
-両方をroundしてみると
+両方を round してみると
 
-: a = curve.y_by_x(2).round       # => 1
-: b = curve.y_by_x(3).round       # => 4
-: diff = b - a                    # => 3
-: (curve.y_by_x(2) + diff)        # => 4.04112869637651
+#+BEGIN_SRC ruby
+a = curve.y_by_x(2).round       # => 1
+b = curve.y_by_x(3).round       # => 4
+diff = b - a                    # => 3
+(curve.y_by_x(2) + diff)        # => 4.04112869637651
+#+END_SRC
 
-4.04 はレベル3のときの 4.16 を越えていない
+4.04 はレベル3のときの 4.16 を越えていない。
 なお、truncate しても ceil しても diff が3になる時点でダメ。
 同じメソッドで小数を削ってしまうのがダメ。
 
 対策1
 
-: a = curve.y_by_x(2).floor       # => 1
-: b = curve.y_by_x(3).ceil        # => 5
-: diff = b - a                    # => 4
-: (curve.y_by_x(2) + diff)        # => 5.04112869637651
+#+BEGIN_SRC ruby
+a = curve.y_by_x(2).floor       # => 1
+b = curve.y_by_x(3).ceil        # => 5
+diff = b - a                    # => 4
+(curve.y_by_x(2) + diff)        # => 5.04112869637651
+#+END_SRC
 
 対策2
 
-: a = curve.y_by_x(2)             # => 1.0411286963765098
-: b = curve.y_by_x(3)             # => 4.164514785506039
-: diff = (b - a).ceil             # => 4
-: (curve.y_by_x(2) + diff)        # => 5.04112869637651
+#+BEGIN_SRC ruby
+a = curve.y_by_x(2)             # => 1.0411286963765098
+b = curve.y_by_x(3)             # => 4.164514785506039
+diff = (b - a).ceil             # => 4
+(curve.y_by_x(2) + diff)        # => 5.04112869637651
+#+END_SRC
 
 対策3
 
-: a = curve.y_by_x(2).ceil        # => 2
-: b = curve.y_by_x(3).ceil        # => 5
-: diff = b - a                    # => 3
-: (a + diff)                      # => 5
+#+BEGIN_SRC ruby
+a = curve.y_by_x(2).ceil        # => 2
+b = curve.y_by_x(3).ceil        # => 5
+diff = b - a                    # => 3
+(a + diff)                      # => 5
+#+END_SRC
 
 *** 現在の経験値だとレベルはいくつか？
 
 現在の経験値は1000に対応するのはレベル32
 
-: curve.x_by_y(1000).round        # => 32
+#+BEGIN_SRC ruby
+curve.x_by_y(1000).round        # => 32
+#+END_SRC
 
-レベル32から経験値を確認すると
+レベル32から経験値を確認すると、
 
-: curve.y_by_x(32)                # => 1000.5246772178259
+#+BEGIN_SRC ruby
+curve.y_by_x(32)                # => 1000.5246772178259
+#+END_SRC
 
 現在の経験値 1000 が 1000.52 を越えていない。
 
 正しい方法
 
-: curve.x_by_y(1000).truncate     # => 31
-: curve.y_by_x(31)                # => 937.0158267388588
+#+BEGIN_SRC ruby
+curve.x_by_y(1000).truncate     # => 31
+curve.y_by_x(31)                # => 937.0158267388588
+#+END_SRC
 
 現在の経験値 1000 が 937.0 を越えている。
 
 *** 【重要】まとめると──
 
-- レベルから経験値を求める場合の y_by_x の結果は ceil する
-- 経験値からレベルを求める場合の x_by_y の結果は floor する
+- レベルから経験値を求める場合の y_by_x の結果は ceil する。
+- 経験値からレベルを求める場合の x_by_y の結果は floor する。
 
 これを使う側でいちいち補正するのも大変なのでモジュールにまとめてある。
 Equation::Base に Equation::LevelSupport を include すれば lv_by_exp と exp_by_lv が使えるようになる。
 (lv_by_exp と exp_by_lv は、それぞれ lv_by_value と value_by_lv にエイリアスしている)
 
-: require 'equation/level_support'
-: Equation::Base.send(:include, Equation::LevelSupport)
-: 
-: curve = Equation.create(:type => :parabola, :x_range => 1..99, :y_range => 0..9999)
-: curve.lv_by_exp(1000)           # => 31
-: curve.exp_by_lv(31)             # => 938
-: curve.lv_by_exp(938)            # => 31
+#+BEGIN_SRC ruby
+require 'equation/level_support'
+Equation::Base.include(Equation::LevelSupport)
+
+curve = Equation.create(:type => :parabola, :x_range => 1..99, :y_range => 0..9999)
+curve.lv_by_exp(1000)           # => 31
+curve.exp_by_lv(31)             # => 938
+curve.lv_by_exp(938)            # => 31
+#+END_SRC
 
 経験値 1000 のときのレベルは 31 で、その 31 になるために必要な経験値は 938 で、938 あればレベル 31 になる。
 
