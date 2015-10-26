@@ -62,6 +62,12 @@ RSpec.describe Equation do
       curve.x_by_y(800).should == 8.280509771224626
       curve.x_by_y(999).should == 9.0
     end
+
+    # ruby 2.2.3p173 (2015-08-18 revision 51636) [x86_64-darwin13] より前だとなぜか交点が取得できずにエラーになっていた
+    it "エラーにならない" do
+      curve = Equation::BezierCurve._create(0..10, 0..10, :pull => -0.3)
+      curve.y_by_x(5).should == 2.2301603505156646
+    end
   end
 
   describe Equation::LevelSupport do

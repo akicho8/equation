@@ -8,8 +8,8 @@ require 'gnuplot'
 x_range = 1..100
 patitions = []
 patitions << {x_range: 1..30,   y_range: 0..1500,     type: :bezier, pull: 0.2}
-patitions << {x_range: 30..90,  y_range: 1500..4000,  type: :bezier, pull: -0.31}
-patitions << {x_range: 90..100, y_range: 4000..10000, type: :bezier, pull: -0.21}
+patitions << {x_range: 30..90,  y_range: 1500..4000,  type: :bezier, pull: -0.3}
+patitions << {x_range: 90..100, y_range: 4000..10000, type: :bezier, pull: -0.2}
 
 list = patitions.collect do |e|
   {
