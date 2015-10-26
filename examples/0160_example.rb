@@ -22,3 +22,11 @@ list = patitions.collect do |e|
   }
 end
 Equation::Base.output_file(list, :title => "Equation::BezierCurve", :filename => "mix_curve.png")
+# >> writing this to gnuplot:
+# >> set terminal png font 'Ricty-Bold.ttf'
+# >> set output "mix_curve.png"
+# >> set title "Equation::BezierCurve"
+# >> set xlabel ""
+# >> set ylabel ""
+# >> set key right bottom
+# >> 
