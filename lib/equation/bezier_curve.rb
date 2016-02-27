@@ -101,7 +101,7 @@ module Equation
       def intersection!(*args)
         t = intersection(*args)
         if t.empty?
-          raise ArgumentError, "直線と曲線の交点が見つかりません。pull が 0.3 か、指定した x y がそれぞれ x_range y_range の範囲に含まれていません"
+          raise ArgumentError, "直線と曲線の交点が見つかりません。pull が -0.3 か、指定した x y がそれぞれ x_range y_range の範囲に含まれていません"
         end
         t
       end
