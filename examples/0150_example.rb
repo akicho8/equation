@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ベジェの場合のみ交点が見つからない事故がある
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'equation'

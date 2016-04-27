@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # 組み合わせる例
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 module Equation
   class Base
     def self.create(**params)
