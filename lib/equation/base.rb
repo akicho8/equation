@@ -31,9 +31,33 @@ module Equation
     end
 
     def _y_by_x(x)
+      case
+      when x == x0
+        y0
+      when x == x1
+        y1
+      else
+        _y_by_x2(x)
+      end
     end
 
     def _x_by_y(y)
+      case
+      when y == y0
+        x0
+      when y == y1
+        x1
+      else
+        _x_by_y2(y)
+      end
+    end
+
+    def _y_by_x2(x)
+      raise NotImplementedError, "#{__method__} is not implemented"
+    end
+
+    def _x_by_y2(y)
+      raise NotImplementedError, "#{__method__} is not implemented"
     end
 
     def self.output_file(list, options = {})

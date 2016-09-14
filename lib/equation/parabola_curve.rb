@@ -28,11 +28,11 @@ require "equation/base"
 
 module Equation
   class ParabolaCurve < Base
-    def _y_by_x(x)
+    def _y_by_x2(x)
       a * (x - x0) ** 2 + y0
     end
 
-    def _x_by_y(y)
+    def _x_by_y2(y)
       Math.sqrt(((y - y0).to_f / a).abs) + x0
     end
 

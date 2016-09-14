@@ -12,11 +12,11 @@ require "equation/base"
 
 module Equation
   class LinearCurve < Base
-    def _y_by_x(x)
+    def _y_by_x2(x)
       Rational((y1 - y0) * (x - x0), x1 - x0) + y0
     end
 
-    def _x_by_y(y)
+    def _x_by_y2(y)
       Rational((y - y0) * (x1 - x0), y1 - y0) + x0
     end
   end

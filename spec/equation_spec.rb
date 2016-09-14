@@ -85,4 +85,12 @@ RSpec.describe Equation do
       curve.exp_range_by_lv(9).should == (67..85)
     end
   end
+
+  it "範囲の端の値は自明" do
+    params = {x_range: 1..100, y_range: 2000..6000, type: :bezier, pull: 0.40005}
+    Equation.create(params).y_by_x(1).should == 2000.0
+    Equation.create(params).y_by_x(100).should == 6000.0
+    Equation.create(params).x_by_y(2000).should == 1.0
+    Equation.create(params).x_by_y(6000).should == 100.0
+  end
 end

@@ -32,12 +32,12 @@ module Equation
       @pull = options[:pull]
     end
 
-    def _y_by_x(x)
+    def _y_by_x2(x)
       _x = Rational(x - x0, x_range.size - 1)
       y0 + curve.y_by_x(_x) * (y_range.size - 1)
     end
 
-    def _x_by_y(y)
+    def _x_by_y2(y)
       _y = Rational(y - y0, y_range.size - 1)
       x0 + curve.x_by_y(_y) * (x_range.size - 1)
     end
