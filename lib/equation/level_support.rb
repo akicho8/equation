@@ -11,8 +11,8 @@
 module Equation::LevelSupport
   # X軸をLVとしたときY軸の経験値は繰り上げとする(次のLVまでに必要な経験値が1未満足りない事故が起きるため)
   # また経験値からLVを求めたときLVは切り捨てとする(必要経験値に到達していないのにLVが上がってしまうため)
-  def exp_by_lv(*args); _y_by_x2(*args).ceil;  end
-  def lv_by_exp(*args); _x_by_y2(*args).floor; end
+  def exp_by_lv(*args); _y_by_x(*args).ceil;  end
+  def lv_by_exp(*args); _x_by_y(*args).floor; end
 
   # LVから求める値が攻撃力などの場合はこっちのメソッドを使う
   alias value_by_lv exp_by_lv
