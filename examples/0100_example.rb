@@ -6,11 +6,11 @@ level = 20..100
 attack_base = 2000
 
 patterns = []
-patterns << {:pull =>  0.4, :attack => (attack_base..10000 - 1000 * 4)}
-patterns << {:pull =>  0.2, :attack => (attack_base..10000 - 1000 * 3)}
-patterns << {:pull =>  0.0, :attack => (attack_base..10000 - 1000 * 2)}
-patterns << {:pull => -0.2, :attack => (attack_base..10000 - 1000 * 1)}
-patterns << {:pull => -0.4, :attack => (attack_base..10000 - 1000 * 0)}
+patterns << {:name => "超早熟", :pull =>  0.4, :attack => (attack_base..10000 - 1000 * 4)}
+patterns << {:name => "早熟",   :pull =>  0.2, :attack => (attack_base..10000 - 1000 * 3)}
+patterns << {:name => "普通",   :pull =>  0.0, :attack => (attack_base..10000 - 1000 * 2)}
+patterns << {:name => "晩成",   :pull => -0.2, :attack => (attack_base..10000 - 1000 * 1)}
+patterns << {:name => "超晩成", :pull => -0.4, :attack => (attack_base..10000 - 1000 * 0)}
 
 list = patterns.collect {|e| {:records => level.collect{|x| {:x => x, :y => Equation::LinearCurve._create(level, e[:attack], e).y_by_x(x)} }}}
 Equation::Base.file_output(list, :title => "linear", :filename => "linear_curve.png")
@@ -18,7 +18,7 @@ Equation::Base.file_output(list, :title => "linear", :filename => "linear_curve.
 list = patterns.collect {|e| {:records => level.collect{|x| {:x => x, :y => Equation::ParabolaCurve._create(level, e[:attack], e).y_by_x(x)} }}}
 Equation::Base.file_output(list, :title => "parabola", :filename => "parabola_curve.png")
 
-list = patterns.collect{|e|{:name => e[:pull], :records => level.collect{|x| {:x => x, :y => Equation::BezierCurve._create(level, e[:attack], e).y_by_x(x)} }}}
+list = patterns.collect{|e|{:name => "#{e[:name]} (#{e[:pull]})", :records => level.collect{|x| {:x => x, :y => Equation::BezierCurve._create(level, e[:attack], e).y_by_x(x)} }}}
 Equation::Base.file_output(list, :title => "bezier", :filename => "bezier_curve.png")
 # >> writing this to gnuplot:
 # >> set terminal png font 'Ricty-Bold.ttf'
