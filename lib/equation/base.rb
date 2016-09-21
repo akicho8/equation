@@ -60,7 +60,7 @@ module Equation
       raise NotImplementedError, "#{__method__} is not implemented"
     end
 
-    def self.output_file(list, options = {})
+    def self.file_output(list, options = {})
       options = {
         :filename => "_output.png",
         :key      => "right bottom",

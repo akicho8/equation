@@ -20,7 +20,7 @@ list = patitions.collect do |e|
     }.compact
   }
 end
-Equation::Base.output_file(list, :title => "Equation::BezierCurve", :filename => "mix_curve.png")
+Equation::Base.file_output(list, :title => "ベジェを3つ連結する例", :filename => "mix_curve.png")
 # >> writing this to gnuplot:
 # >> set terminal png font 'Ricty-Bold.ttf'
 # >> set output "mix_curve.png"

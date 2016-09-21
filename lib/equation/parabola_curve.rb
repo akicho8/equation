@@ -57,7 +57,7 @@ if $0 == __FILE__
     end
   end
 
-  def output_file(records, filename)
+  def file_output(records, filename)
     Gnuplot.open do |gp|
       Gnuplot::Plot.new(gp) do |plot|
         plot.terminal "png font 'Ricty-Bold.ttf'"
@@ -102,7 +102,7 @@ if $0 == __FILE__
 
   tt curve.level_elems
 
-  output_file(records, "_exp_curve1.png")
+  file_output(records, "_exp_curve1.png")
 
   # レベル2のときに経験値10にするには？
 
@@ -123,7 +123,7 @@ if $0 == __FILE__
     {:lv => level, :exp => curve.y_by_x(level)}
   end
 
-  output_file(records, "_exp_curve2.png")
+  file_output(records, "_exp_curve2.png")
 
   tt curve.level_elems
   tt curve.exp_elems

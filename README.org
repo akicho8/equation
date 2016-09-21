@@ -7,6 +7,7 @@
   - [[https://gemnasium.com/akicho8/equation/][Gemnasium]]: [[https://gemnasium.com/akicho8/equation.png]]
   - [[https://codeclimate.com/github/akicho8/equation][Code Climate]]: [[https://codeclimate.com/github/akicho8/equation.png]]
 
+  [[https://raw.github.com/akicho8/equation/master/examples/all_curve.png]]
   [[https://raw.github.com/akicho8/equation/master/examples/linear_curve.png]]
   [[https://raw.github.com/akicho8/equation/master/examples/parabola_curve.png]]
   [[https://raw.github.com/akicho8/equation/master/examples/bezier_curve.png]]

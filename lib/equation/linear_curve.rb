@@ -27,7 +27,7 @@ if $0 == __FILE__
   require "rain_table"
   require "gnuplot"
 
-  def output_file(records, filename)
+  def file_output(records, filename)
     Gnuplot.open do |gp|
       Gnuplot::Plot.new(gp) do |plot|
         plot.terminal "png font 'Ricty-Bold.ttf'"
@@ -57,7 +57,7 @@ if $0 == __FILE__
     {:lv => level, :exp => curve.y_by_x(level).round(2)}
   end
 
-  output_file(records, "_linear_curve.png")
+  file_output(records, "_linear_curve.png")
 
   curve = Equation::LinearCurve._create(1..99, 1..3)
   tt (1..99).collect {|level| {:lv => level, :exp => curve.y_by_x(level).to_f} }
