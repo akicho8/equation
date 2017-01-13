@@ -25,7 +25,7 @@ require "matrix"
 
 module Equation
   class BezierCurve < Base
-    attr_accessor :pull
+    attr_reader :pull
 
     def initialize(*args, **options)
       super(*args)
