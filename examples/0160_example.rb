@@ -24,7 +24,7 @@ Equation::Base.file_output(list, :title => "ベジェを3つ連結する例", :f
 # >> writing this to gnuplot:
 # >> set terminal png font 'Ricty-Bold.ttf'
 # >> set output "mix_curve.png"
-# >> set title "Equation::BezierCurve"
+# >> set title "ベジェを3つ連結する例"
 # >> set xlabel ""
 # >> set ylabel ""
 # >> set key right bottom
