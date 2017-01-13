@@ -5,7 +5,11 @@ module Equation
     end
 
     def self._create(x_range, y_range, *args)
-      new(x_range.min, y_range.min, x_range.max, y_range.max, *args)
+      v = [x_range.min, y_range.min, x_range.max, y_range.max]
+      unless v.all?
+        raise ArgumentError, "#{name}.#{__method__}(#{x_range.inspect}, #{y_range.inspect}, *#{args.inspect}) の呼び方になっているため正しい範囲が取得できません"
+      end
+      new(*v, *args)
     end
 
     attr_accessor :x0, :y0, :x1, :y1

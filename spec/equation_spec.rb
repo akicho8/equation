@@ -93,4 +93,9 @@ RSpec.describe Equation do
     Equation.create(params).x_by_y(2000).should == 1.0
     Equation.create(params).x_by_y(6000).should == 100.0
   end
+
+  it "max...min 状態は早めにエラー" do
+    params = {x_range: 1..0, y_range: 1..0, type: :linear}
+    proc { Equation.create(params).y_by_x(1) }.should raise_error(ArgumentError)
+  end
 end
